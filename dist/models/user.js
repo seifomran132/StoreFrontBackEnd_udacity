@@ -59,7 +59,7 @@ var UsersModel = /** @class */ (function () {
                         return [4 /*yield*/, conn.query(sql)];
                     case 2:
                         result = _a.sent();
-                        conn.release();
+                        conn.release(); // Release the connection
                         return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
@@ -88,7 +88,7 @@ var UsersModel = /** @class */ (function () {
                             ])];
                     case 2:
                         result = _a.sent();
-                        conn.release();
+                        conn.release(); // Release the connection
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_2 = _a.sent();
@@ -114,7 +114,7 @@ var UsersModel = /** @class */ (function () {
                         return [4 /*yield*/, conn.query(sql, [u_id])];
                     case 2:
                         result = _a.sent();
-                        conn.release();
+                        conn.release(); // Release the connection
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_3 = _a.sent();

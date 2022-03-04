@@ -35,15 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-var express_1 = __importDefault(require("express"));
 var user_1 = require("../models/user");
 var userModel = new user_1.UsersModel;
-var router = express_1["default"].Router();
-var indexHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+// Handler for the index function in UserModel
+var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -55,7 +51,8 @@ var indexHandler = function (req, res) { return __awaiter(void 0, void 0, void 0
         }
     });
 }); };
-var createHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+// Handler for create user function @params (u: user)
+var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var ourUser, createdUser;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -73,7 +70,8 @@ var createHandler = function (req, res) { return __awaiter(void 0, void 0, void 
         }
     });
 }); };
-var showHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+// Handler for create user function @params (id: number)
+var show = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var showedUser;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -85,9 +83,10 @@ var showHandler = function (req, res) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
+// Simple router
 var userRoute = function (app) {
-    app.post("/create", createHandler);
-    app.get("/index", indexHandler);
-    app.get("/show/:id", showHandler);
+    app.post("/user/create", create);
+    app.get("/user/index", index);
+    app.get("/user/show/:id", show);
 };
 exports["default"] = userRoute;
