@@ -7,15 +7,22 @@
     "start": "node src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "jasmine-ts",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "mgup": "db-migrate up",
+    "mgdown": "db-migrate down"
+
   },
   "author": "Udacity",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
     "body-parser": "^1.19.0",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
     "typescript": "^4.1.3",
-    "pg": "^8.5.1"
+    "yarn": "^1.22.17"
   },
   "devDependencies": {
     "@types/express": "^4.17.9",
