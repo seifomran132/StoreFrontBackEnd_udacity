@@ -1,5 +1,9 @@
 import client from "../database";
 import user from "../types/user.type";
+import bcrypt from "bcrypt";
+
+const pepper: string | undefined = process.env.BCRYPT_PASSWORD;
+const salt: string | undefined = process.env.SALT_ROUNDS;
 
 export class UsersModel {
   // Index function to get all users from database
@@ -22,24 +26,29 @@ export class UsersModel {
       const conn = await client.connect(); // Starting DB connection
       const sql =
         "INSERT INTO users(firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *";
+
+      const hashed: string = bcrypt.hashSync(
+        u.password + pepper,
+        parseInt(salt as string)
+      );
+
       const result = await conn.query(sql, [
         u.firstname,
         u.lastname,
-        u.password,
+        hashed,
       ]);
       conn.release(); // Release the connection
 
-
       return result.rows[0];
     } catch (err) {
-      console.log(err)
+      console.log(err);
 
       return `User does not exist ${err}`;
     }
   }
 
   // Create function to insert user to database
-  async show(u_id:number): Promise<user[] | string> {
+  async show(u_id: number): Promise<user[] | string> {
     try {
       const conn = await client.connect(); // Starting DB connection
       const sql = "select * from users where users.id = $1";

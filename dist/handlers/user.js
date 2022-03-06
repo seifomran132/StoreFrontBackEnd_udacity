@@ -35,9 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
+var express_1 = __importDefault(require("express"));
 var user_1 = require("../models/user");
 var userModel = new user_1.UsersModel;
+var UserRouter = express_1["default"].Router();
 // Handler for the index function in UserModel
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users;
@@ -84,9 +89,7 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 // Simple router
-var userRoute = function (app) {
-    app.post("/user/create", create);
-    app.get("/user/index", index);
-    app.get("/user/show/:id", show);
-};
-exports["default"] = userRoute;
+UserRouter.get("/index", index);
+UserRouter.post("/create", create);
+UserRouter.get("/show/:id", show);
+exports["default"] = UserRouter;

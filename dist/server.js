@@ -11,9 +11,10 @@ var orders_1 = __importDefault(require("./handlers/orders"));
 var app = (0, express_1["default"])();
 var address = "0.0.0.0:3000";
 app.use(body_parser_1["default"].json());
-(0, user_1["default"])(app);
+// userRoute(app);
 (0, products_1["default"])(app);
 (0, orders_1["default"])(app);
+app.use("/user", user_1["default"]);
 app.get("/", function (req, res) {
     res.send("Hello World");
 });

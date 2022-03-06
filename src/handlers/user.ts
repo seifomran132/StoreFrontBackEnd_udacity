@@ -3,7 +3,7 @@ import user from '../types/user.type'
 import {UsersModel} from '../models/user'
 
 const userModel = new UsersModel;
-
+const UserRouter = express.Router()
 
 
 // Handler for the index function in UserModel
@@ -34,13 +34,9 @@ const show = async (req: express.Request, res:express.Response)=>{
 
 // Simple router
 
-const userRoute = (app: express.Application)=>{
-    app.post("/user/create", create)
-    app.get("/user/index", index)
-    app.get("/user/show/:id", show)
+UserRouter.get("/index" , index)
+UserRouter.post("/create", create)
+UserRouter.get("/show/:id", show)
 
-    
-    
-}
 
-export default userRoute
+export default UserRouter
