@@ -1,3 +1,4 @@
+import { PoolClient, QueryResult } from "pg";
 import client from "../database";
 import product from "../types/product.type";
 
@@ -6,9 +7,9 @@ export class ProductModel {
 
   async index(): Promise<product[] | string> {
     try {
-      const conn = await client.connect(); //Starting DB connection
-      const sql = "select * from product";
-      const result = await conn.query(sql);
+      const conn: PoolClient = await client.connect(); //Starting DB connection
+      const sql: string = "select * from product";
+      const result: QueryResult = await conn.query(sql);
       conn.release(); // Release the connection
       return result.rows;
     } catch (err) {
@@ -20,10 +21,10 @@ export class ProductModel {
 
   async create(p: product): Promise<product | string> {
     try {
-      const conn = await client.connect(); //Starting DB connection
-      const sql =
+      const conn: PoolClient = await client.connect(); //Starting DB connection
+      const sql: string =
         "insert into product (name, price, category) values ($1, $2, $3) returning *";
-      const result = await conn.query(sql, [p.name, p.price, p.category]);
+      const result: QueryResult = await conn.query(sql, [p.name, p.price, p.category]);
       conn.release(); // Release DB connection
 
       return result.rows[0];
@@ -36,9 +37,9 @@ export class ProductModel {
 
   async show(p_id: number): Promise<product | string> {
       try {
-        const conn = await client.connect(); // Starting DB connection
-        const sql = "select * from product where product.id = $1";
-        const result = await conn.query(sql, [p_id]);
+        const conn: PoolClient = await client.connect(); // Starting DB connection
+        const sql: string = "select * from product where product.id = $1";
+        const result: QueryResult = await conn.query(sql, [p_id]);
         conn.release(); // Release the connection
         return result.rows[0];
       }
@@ -49,9 +50,9 @@ export class ProductModel {
 
   async showByCategory(p_cat: string): Promise<product[] | string> {
     try {
-      const conn = await client.connect(); // Starting DB connection
-      const sql = "select * from product where product.category = $1";
-      const result = await conn.query(sql, [p_cat]);
+      const conn: PoolClient = await client.connect(); // Starting DB connection
+      const sql: string = "select * from product where product.category = $1";
+      const result: QueryResult = await conn.query(sql, [p_cat]);
       conn.release(); // Release the connection
       return result.rows;
     }

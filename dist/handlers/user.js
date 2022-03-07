@@ -52,7 +52,7 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
             case 0: return [4 /*yield*/, userModel.index()];
             case 1:
                 users = _a.sent();
-                res.send(users);
+                res.json(users);
                 return [2 /*return*/];
         }
     });
@@ -71,8 +71,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, userModel.create(ourUser)];
             case 1:
                 createdUser = _a.sent();
-                console.log(req.headers.authorization);
-                res.send(createdUser);
+                res.json(createdUser);
                 return [2 /*return*/];
         }
     });

@@ -52,7 +52,7 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
             case 0: return [4 /*yield*/, productModel.index()];
             case 1:
                 products = _a.sent();
-                res.send(products);
+                res.json(products);
                 return [2 /*return*/];
         }
     });
@@ -71,7 +71,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, productModel.create(ourProduct)];
             case 1:
                 createdProduct = _a.sent();
-                res.send(createdProduct);
+                res.json(createdProduct);
                 return [2 /*return*/];
         }
     });

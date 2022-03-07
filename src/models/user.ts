@@ -1,19 +1,22 @@
 import client from "../database";
-import user from "../types/user.type";
+import {user, createdUser} from "../types/user.type";
 import bcrypt from "bcrypt";
 import jsonwebtoken from 'jsonwebtoken';
+import { PoolClient, QueryResult } from "pg";
 
 const pepper: string | undefined = process.env.BCRYPT_PASSWORD;
 const salt: string | undefined = process.env.SALT_ROUNDS;
+
+
 
 export class UsersModel {
   // Index function to get all users from database
 
   async index(): Promise<user[]> {
     try {
-      const conn = await client.connect(); //Starting DB connection
-      const sql = "select * from users";
-      const result = await conn.query(sql);
+      const conn: PoolClient = await client.connect(); //Starting DB connection
+      const sql: string = "select * from users";
+      const result: QueryResult = await conn.query(sql);
       conn.release(); // Release the connection
       return result.rows;
     } catch (err) {
@@ -22,10 +25,10 @@ export class UsersModel {
   }
 
   // Create function to insert user to database
-  async create(u: user): Promise<any> {
+  async create(u: user): Promise<createdUser | string> {
     try {
-      const conn = await client.connect(); // Starting DB connection
-      const sql =
+      const conn: PoolClient = await client.connect(); // Starting DB connection
+      const sql: string =
         "INSERT INTO users(firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *";
 
       const hashed: string = bcrypt.hashSync(
@@ -33,7 +36,7 @@ export class UsersModel {
         parseInt(salt as string)
       );
 
-      const result = await conn.query(sql, [
+      const result: QueryResult = await conn.query(sql, [
         u.firstname,
         u.lastname,
         hashed,
@@ -52,11 +55,11 @@ export class UsersModel {
   }
 
   // Create function to insert user to database
-  async show(u_id: number): Promise<user[] | string> {
+  async show(u_id: number): Promise<user | string> {
     try {
-      const conn = await client.connect(); // Starting DB connection
-      const sql = "select * from users where users.id = $1";
-      const result = await conn.query(sql, [u_id]);
+      const conn: PoolClient = await client.connect(); // Starting DB connection
+      const sql: string = "select * from users where users.id = $1";
+      const result: QueryResult = await conn.query(sql, [u_id]);
       conn.release(); // Release the connection
       return result.rows[0];
     } catch (err) {

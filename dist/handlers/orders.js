@@ -52,7 +52,7 @@ var getorders = function (req, res) { return __awaiter(void 0, void 0, void 0, f
             case 0: return [4 /*yield*/, orderModel.getorders(req.body.user_id, req.body.status)];
             case 1:
                 orders = _a.sent();
-                res.send(orders);
+                res.json(orders);
                 return [2 /*return*/];
         }
     });

@@ -4,12 +4,13 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node src/server.ts",
+    "start": "node dist/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "jasmine-ts",
     "tsc": "tsc",
     "mgup": "db-migrate up",
-    "mgdown": "db-migrate down"
+    "mgdown": "db-migrate down",
+    "fulltest": "set NODE_ENV = test"
   },
   "author": "Udacity",
   "license": "ISC",
