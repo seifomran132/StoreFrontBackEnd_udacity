@@ -35,6 +35,11 @@ const show = async (req: express.Request, res: express.Response)=>{
     res.json(showedProduct)
 }
 
+const getByCategory = async (req: express.Request, res: express.Response) => {
+    const allInCat = await productModel.showByCategory(req.body.category);
+    res.json(allInCat);
+}
+
 
 // Simple router
 
@@ -43,6 +48,8 @@ const show = async (req: express.Request, res: express.Response)=>{
 productRouter.get('/index', index);
 productRouter.post('/create', verifyToken, create);
 productRouter.get('/show/:id', show);
+productRouter.get('/index/category', getByCategory);
+
 
 
 export default productRouter;

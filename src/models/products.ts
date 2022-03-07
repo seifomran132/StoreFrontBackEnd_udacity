@@ -46,5 +46,18 @@ export class ProductModel {
           return `Something went wrong in getting the product ${err}`
       }
   }
+
+  async showByCategory(p_cat: string): Promise<product[] | string> {
+    try {
+      const conn = await client.connect(); // Starting DB connection
+      const sql = "select * from product where product.category = $1";
+      const result = await conn.query(sql, [p_cat]);
+      conn.release(); // Release the connection
+      return result.rows;
+    }
+    catch (err) {
+      return `There is no products in this category ${err}`
+    }
+  }
   
 }

@@ -89,8 +89,21 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
         }
     });
 }); };
+var getByCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var allInCat;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, productModel.showByCategory(req.body.category)];
+            case 1:
+                allInCat = _a.sent();
+                res.json(allInCat);
+                return [2 /*return*/];
+        }
+    });
+}); };
 // Simple router
 productRouter.get('/index', index);
 productRouter.post('/create', auth_1.verifyToken, create);
 productRouter.get('/show/:id', show);
+productRouter.get('/index/category', getByCategory);
 exports["default"] = productRouter;
