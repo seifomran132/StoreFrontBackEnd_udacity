@@ -10,11 +10,10 @@ const address: string = "0.0.0.0:3000";
 app.use(bodyParser.json());
 
 // userRoute(app);
-productRouter(app);
-ordersRouter(app);
 
-app.use("/user", UserRouter)
-
+app.use("/user", UserRouter);
+app.use("/product", productRouter);
+app.use("/orders", ordersRouter)
 
 app.get("/", function (req: Request, res: Response) {
   res.send("Hello World");

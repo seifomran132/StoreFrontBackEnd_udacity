@@ -1,6 +1,7 @@
 import client from "../database";
 import user from "../types/user.type";
 import bcrypt from "bcrypt";
+import jsonwebtoken from 'jsonwebtoken';
 
 const pepper: string | undefined = process.env.BCRYPT_PASSWORD;
 const salt: string | undefined = process.env.SALT_ROUNDS;
@@ -21,7 +22,7 @@ export class UsersModel {
   }
 
   // Create function to insert user to database
-  async create(u: user): Promise<user | string> {
+  async create(u: user): Promise<any> {
     try {
       const conn = await client.connect(); // Starting DB connection
       const sql =
@@ -39,7 +40,10 @@ export class UsersModel {
       ]);
       conn.release(); // Release the connection
 
-      return result.rows[0];
+      const token = jsonwebtoken.sign(result.rows[0], process.env.TOKEN as string);
+      
+
+      return {user: result.rows[0], token: token};
     } catch (err) {
       console.log(err);
 

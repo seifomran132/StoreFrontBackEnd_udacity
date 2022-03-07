@@ -35,9 +35,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
+var express_1 = __importDefault(require("express"));
 var products_1 = require("../models/products");
+var auth_1 = require("../middleware/auth");
 var productModel = new products_1.ProductModel;
+var productRouter = express_1["default"].Router();
 // Index function handler
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var products;
@@ -84,9 +90,7 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 // Simple router
-var productRouter = function (app) {
-    app.get('/product/index', index);
-    app.post('/product/create', create);
-    app.get('/product/show/:id', show);
-};
+productRouter.get('/index', index);
+productRouter.post('/create', auth_1.verifyToken, create);
+productRouter.get('/show/:id', show);
 exports["default"] = productRouter;

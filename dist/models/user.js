@@ -42,6 +42,7 @@ exports.__esModule = true;
 exports.UsersModel = void 0;
 var database_1 = __importDefault(require("../database"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var pepper = process.env.BCRYPT_PASSWORD;
 var salt = process.env.SALT_ROUNDS;
 var UsersModel = /** @class */ (function () {
@@ -75,7 +76,7 @@ var UsersModel = /** @class */ (function () {
     // Create function to insert user to database
     UsersModel.prototype.create = function (u) {
         return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, hashed, result, err_2;
+            var conn, sql, hashed, result, token, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -93,7 +94,8 @@ var UsersModel = /** @class */ (function () {
                     case 2:
                         result = _a.sent();
                         conn.release(); // Release the connection
-                        return [2 /*return*/, result.rows[0]];
+                        token = jsonwebtoken_1["default"].sign(result.rows[0], process.env.TOKEN);
+                        return [2 /*return*/, { user: result.rows[0], token: token }];
                     case 3:
                         err_2 = _a.sent();
                         console.log(err_2);

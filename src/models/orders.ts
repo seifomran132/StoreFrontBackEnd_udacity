@@ -9,13 +9,11 @@ export class OrderModel {
             if(completed){
                 const sql = `select * from orders where user_id = $1 and orders.status = 'completed'`;
                 const result = await conn.query(sql, [u_id]);
-                console.log("inside if")
 
                 return result.rows
             }
             const sql = `select * from orders where user_id = $1`;
             const result = await conn.query(sql, [u_id]);
-            console.log("outside")
 
             return result.rows
         }

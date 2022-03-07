@@ -1,10 +1,12 @@
 import express from 'express';
 import product from '../types/product.type';
 import { ProductModel } from '../models/products';
+import { verify } from 'jsonwebtoken';
+import { verifyToken } from '../middleware/auth';
 
 
 const productModel = new ProductModel;
-
+const productRouter = express.Router();
 
 // Index function handler
 
@@ -36,11 +38,11 @@ const show = async (req: express.Request, res: express.Response)=>{
 
 // Simple router
 
-const productRouter = (app: express.Application)=>{
-    app.get('/product/index', index)
-    app.post('/product/create', create)
-    app.get('/product/show/:id', show)
 
-}
+
+productRouter.get('/index', index);
+productRouter.post('/create', verifyToken, create);
+productRouter.get('/show/:id', show);
+
 
 export default productRouter;

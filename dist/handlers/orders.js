@@ -35,17 +35,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 var orders_1 = require("../models/orders");
+var express_1 = __importDefault(require("express"));
+var auth_1 = require("../middleware/auth");
 var orderModel = new orders_1.OrderModel;
+var ordersRouter = express_1["default"].Router();
 // Get Order handler @params (u_id: number, completed: boolean = false)
 var getorders = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var orders;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                console.log(req.body.user_id);
-                return [4 /*yield*/, orderModel.getorders(req.body.user_id, req.body.status)];
+            case 0: return [4 /*yield*/, orderModel.getorders(req.body.user_id, req.body.status)];
             case 1:
                 orders = _a.sent();
                 res.send(orders);
@@ -53,7 +57,6 @@ var getorders = function (req, res) { return __awaiter(void 0, void 0, void 0, f
         }
     });
 }); };
-var ordersRouter = function (app) {
-    app.get('/orders/:id', getorders);
-};
+// Simple Router
+ordersRouter.get("/:id", auth_1.verifyToken, getorders);
 exports["default"] = ordersRouter;

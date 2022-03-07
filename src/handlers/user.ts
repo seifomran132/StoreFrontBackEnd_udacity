@@ -1,7 +1,7 @@
 import express from 'express';
 import user from '../types/user.type'
 import {UsersModel} from '../models/user'
-
+import { verifyToken } from '../middleware/auth';
 const userModel = new UsersModel;
 const UserRouter = express.Router()
 
@@ -22,6 +22,7 @@ const create = async (req: express.Request, res:express.Response)=>{
         password: req.body.password
     }
     const createdUser = await userModel.create(ourUser);
+    console.log(req.headers.authorization)
     res.send(createdUser);
 }
 
@@ -34,9 +35,9 @@ const show = async (req: express.Request, res:express.Response)=>{
 
 // Simple router
 
-UserRouter.get("/index" , index)
-UserRouter.post("/create", create)
-UserRouter.get("/show/:id", show)
+UserRouter.get("/index" , verifyToken, index)
+UserRouter.post("/create", verifyToken, create)
+UserRouter.get("/show/:id", verifyToken, show)
 
 
 export default UserRouter

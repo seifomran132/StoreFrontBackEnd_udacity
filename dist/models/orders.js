@@ -61,14 +61,12 @@ var OrderModel = /** @class */ (function () {
                         return [4 /*yield*/, conn.query(sql_1, [u_id])];
                     case 2:
                         result_1 = _a.sent();
-                        console.log("inside if");
                         return [2 /*return*/, result_1.rows];
                     case 3:
                         sql = "select * from orders where user_id = $1";
                         return [4 /*yield*/, conn.query(sql, [u_id])];
                     case 4:
                         result = _a.sent();
-                        console.log("outside");
                         return [2 /*return*/, result.rows];
                     case 5:
                         err_1 = _a.sent();

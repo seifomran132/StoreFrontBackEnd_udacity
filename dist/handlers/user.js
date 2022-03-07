@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var user_1 = require("../models/user");
+var auth_1 = require("../middleware/auth");
 var userModel = new user_1.UsersModel;
 var UserRouter = express_1["default"].Router();
 // Handler for the index function in UserModel
@@ -70,6 +71,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, userModel.create(ourUser)];
             case 1:
                 createdUser = _a.sent();
+                console.log(req.headers.authorization);
                 res.send(createdUser);
                 return [2 /*return*/];
         }
@@ -89,7 +91,7 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 // Simple router
-UserRouter.get("/index", index);
-UserRouter.post("/create", create);
-UserRouter.get("/show/:id", show);
+UserRouter.get("/index", auth_1.verifyToken, index);
+UserRouter.post("/create", auth_1.verifyToken, create);
+UserRouter.get("/show/:id", auth_1.verifyToken, show);
 exports["default"] = UserRouter;
