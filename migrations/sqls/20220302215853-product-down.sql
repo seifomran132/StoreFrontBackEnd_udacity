@@ -1,2 +1,2 @@
 
-DROP TABLE products
+DROP TABLE product

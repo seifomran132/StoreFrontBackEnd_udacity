@@ -48,7 +48,6 @@ export class UsersModel {
 
       return {user: result.rows[0], token: token};
     } catch (err) {
-      console.log(err);
 
       return `User does not exist ${err}`;
     }
@@ -64,6 +63,19 @@ export class UsersModel {
       return result.rows[0];
     } catch (err) {
       return `User does not exist ${err}`;
+    }
+  }
+
+  async delete(u_id: number): Promise<user | string> {
+    try {
+      const conn: PoolClient = await client.connect(); // Starting DB connection
+      const sql: string = "delete from users where users.id = $1 returning *";
+      const result: QueryResult = await conn.query(sql, [u_id]);
+      conn.release(); // Release the connection
+      return result.rows[0];
+    }
+    catch(err) {
+      return `Something went wrong ${err}`
     }
   }
 }

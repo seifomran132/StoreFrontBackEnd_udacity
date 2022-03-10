@@ -32,11 +32,18 @@ const show = async (req: express.Request, res:express.Response): Promise<void>=>
     res.json(showedUser)
 }
 
+const deleteUser = async (req: express.Request, res:express.Response): Promise<void> => {
+    const deletedUser = await userModel.delete(req.body.id);
+    res.json({message: 'user deleted', userDetails: deletedUser});
+}
+
 // Simple router
 
 UserRouter.get("/index" , verifyToken, index)
-UserRouter.post("/create", verifyToken, create)
+UserRouter.post("/create", create)
 UserRouter.get("/show/:id", verifyToken, show)
+UserRouter.delete("/delete/:id", verifyToken, deleteUser)
+
 
 
 export default UserRouter

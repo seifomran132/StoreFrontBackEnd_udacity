@@ -39,6 +39,10 @@ const getByCategory = async (req: express.Request, res: express.Response): Promi
     res.json(allInCat);
 }
 
+const deleteProduct = async (req: express.Request, res:express.Response): Promise<void> => {
+    const deletedUser = await productModel.delete(req.body.id);
+    res.json({message: 'product deleted', userDetails: deletedUser});
+}
 
 // Simple router
 
@@ -48,6 +52,7 @@ productRouter.get('/index', index);
 productRouter.post('/create', verifyToken, create);
 productRouter.get('/show/:id', show);
 productRouter.get('/index/category', getByCategory);
+productRouter.delete('/delete/:id',verifyToken, deleteProduct);
 
 
 

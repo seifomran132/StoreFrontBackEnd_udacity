@@ -13,6 +13,7 @@ const {
     POSTGRES_PASSWORD,
 } = process.env;
 
+
 const client = new Pool({
     host: POSTGRES_HOST ,
     port: parseInt(POSTGRES_PORT as string),

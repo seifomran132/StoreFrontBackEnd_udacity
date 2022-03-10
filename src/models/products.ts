@@ -60,5 +60,18 @@ export class ProductModel {
       return `There is no products in this category ${err}`
     }
   }
+
+  async delete(p_id: number): Promise<product | string> {
+    try {
+      const conn: PoolClient = await client.connect(); // Starting DB connection
+      const sql: string = "delete from product where product.id = $1 returning *";
+      const result: QueryResult = await conn.query(sql, [p_id]);
+      conn.release(); // Release the connection
+      return result.rows[0];
+    }
+    catch(err) {
+      return `Something went wrong ${err}`
+    }
+  }
   
 }

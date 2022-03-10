@@ -13,9 +13,28 @@ const getorders = async (req: express.Request, res: express.Response): Promise<v
     const orders: order[] | string = await orderModel.getorders(req.body.user_id, req.body.status);
     res.json(orders);
 }
+const createOrder = async (req: express.Request, res: express.Response)=> {
+    const ourOrder:order = {
+        product_id: req.body.product_id,
+        user_id: req.body.product_id,
+        quantity: req.body.quantity,
+        status: req.body.status
+    }
+    const createdOrder = await orderModel.createOrder(ourOrder)
+    res.json(createdOrder);
+}
+
+const deleteOrder = async (req: express.Request, res:express.Response): Promise<void> => {
+    const deletedOrder = await orderModel.delete(req.body.id);
+    res.json({message: 'order deleted', userDetails: deletedOrder});
+}
 
 // Simple Router
 
 ordersRouter.get("/:id", verifyToken, getorders)
+ordersRouter.post("/create", verifyToken, createOrder)
+ordersRouter.delete("/delete/:id", verifyToken, deleteOrder)
+
+
 
 export default ordersRouter;
