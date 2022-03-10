@@ -1,13 +1,11 @@
-import client from "../database";
-import {user, createdUser} from "../types/user.type";
-import bcrypt from "bcrypt";
+import client from '../database';
+import { user, createdUser } from '../types/user.type';
+import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
-import { PoolClient, QueryResult } from "pg";
+import { PoolClient, QueryResult } from 'pg';
 
 const pepper: string | undefined = process.env.BCRYPT_PASSWORD;
 const salt: string | undefined = process.env.SALT_ROUNDS;
-
-
 
 export class UsersModel {
   // Index function to get all users from database
@@ -15,12 +13,12 @@ export class UsersModel {
   async index(): Promise<user[]> {
     try {
       const conn: PoolClient = await client.connect(); //Starting DB connection
-      const sql: string = "select * from users";
+      const sql = 'select * from users';
       const result: QueryResult = await conn.query(sql);
       conn.release(); // Release the connection
       return result.rows;
     } catch (err) {
-      throw new Error("Something went wrong, can not return users");
+      throw new Error('Something went wrong, can not return users');
     }
   }
 
@@ -28,8 +26,8 @@ export class UsersModel {
   async create(u: user): Promise<createdUser | string> {
     try {
       const conn: PoolClient = await client.connect(); // Starting DB connection
-      const sql: string =
-        "INSERT INTO users(firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *";
+      const sql =
+        'INSERT INTO users(firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *';
 
       const hashed: string = bcrypt.hashSync(
         u.password + pepper,
@@ -43,12 +41,13 @@ export class UsersModel {
       ]);
       conn.release(); // Release the connection
 
-      const token = jsonwebtoken.sign(result.rows[0], process.env.TOKEN as string);
-      
+      const token = jsonwebtoken.sign(
+        result.rows[0],
+        process.env.TOKEN as string
+      );
 
-      return {user: result.rows[0], token: token};
+      return { user: result.rows[0], token: token };
     } catch (err) {
-
       return `User does not exist ${err}`;
     }
   }
@@ -57,7 +56,7 @@ export class UsersModel {
   async show(u_id: number): Promise<user | string> {
     try {
       const conn: PoolClient = await client.connect(); // Starting DB connection
-      const sql: string = "select * from users where users.id = $1";
+      const sql = 'select * from users where users.id = $1';
       const result: QueryResult = await conn.query(sql, [u_id]);
       conn.release(); // Release the connection
       return result.rows[0];
@@ -69,13 +68,12 @@ export class UsersModel {
   async delete(u_id: number): Promise<user | string> {
     try {
       const conn: PoolClient = await client.connect(); // Starting DB connection
-      const sql: string = "delete from users where users.id = $1 returning *";
+      const sql = 'delete from users where users.id = $1 returning *';
       const result: QueryResult = await conn.query(sql, [u_id]);
       conn.release(); // Release the connection
       return result.rows[0];
-    }
-    catch(err) {
-      return `Something went wrong ${err}`
+    } catch (err) {
+      return `Something went wrong ${err}`;
     }
   }
 }

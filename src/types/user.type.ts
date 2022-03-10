@@ -4,8 +4,6 @@ export type user = {
   password: string;
 };
 export type createdUser = {
-  user:user;
-  token: string
-}
-
-
+  user: user;
+  token: string;
+};
