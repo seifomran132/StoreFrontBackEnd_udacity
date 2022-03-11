@@ -53,7 +53,7 @@ export class UsersModel {
   }
 
   // Create function to insert user to database
-  async show(u_id: number): Promise<user | string> {
+  async show(u_id: string): Promise<user | string> {
     try {
       const conn: PoolClient = await client.connect(); // Starting DB connection
       const sql = 'select * from users where users.id = $1';

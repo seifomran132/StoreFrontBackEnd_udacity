@@ -50,9 +50,8 @@ describe('Test User Endpoints', () => {
         expect(response.body.length).toEqual(2);
     });
     it('Should Test show endpoint', async () => {
-        const response = await Supertest.get('/user/show/:2')
-            .set('Authorization', 'Bearer ' + token)
-            .send({ id: '2' });
+        const response = await Supertest.get('/user/show/2')
+            .set('Authorization', 'Bearer ' + token);
         expect(response.status).toEqual(200);
         const { firstname, lastname } = response.body;
         expect(firstname).toEqual('mohamed');

@@ -6,17 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderModel = void 0;
 const database_1 = __importDefault(require("../database"));
 class OrderModel {
-    async getorders(u_id, completed = false) {
+    async getorders(u_id, completed = '') {
         try {
             const conn = await database_1.default.connect(); // Start DB Connection
             if (completed) {
-                const sql = `select * from orders JOIN order_product ON orders.id = order_product.order_id where orders.user_id = $1; and orders.status = 'completed'`;
-                const result = await conn.query(sql, [u_id]);
+                const sql = `select * from orders JOIN order_product ON orders.id = order_product.order_id where orders.user_id = $1 and orders.status = 'completed'`;
+                const result = await conn.query(sql, [parseInt(u_id)]);
                 conn.release(); // Release DB Connection
                 return result.rows;
             }
             const sql = `select * from orders JOIN order_product ON orders.id = order_product.order_id where orders.user_id = $1;`;
-            const result = await conn.query(sql, [u_id]);
+            const result = await conn.query(sql, [parseInt(u_id)]);
             conn.release(); // Release DB Connection
             return result.rows;
         }

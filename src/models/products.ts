@@ -39,7 +39,7 @@ export class ProductModel {
 
   // Show a specific product function
 
-  async show(p_id: number): Promise<product | string> {
+  async show(p_id: string): Promise<product | string> {
     try {
       const conn: PoolClient = await client.connect(); // Starting DB connection
       const sql = 'select * from product where product.id = $1';
@@ -51,12 +51,13 @@ export class ProductModel {
     }
   }
 
-  async showByCategory(p_cat: string): Promise<product[] | string> {
+  async showByCategory(p_cat: unknown): Promise<product[] | string> {
     try {
       const conn: PoolClient = await client.connect(); // Starting DB connection
       const sql = 'select * from product where product.category = $1';
       const result: QueryResult = await conn.query(sql, [p_cat]);
       conn.release(); // Release the connection
+
       return result.rows;
     } catch (err) {
       return `There is no products in this category ${err}`;

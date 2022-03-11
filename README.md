@@ -91,7 +91,7 @@ To index all products you go to this link `http://localhost:3000/product/index` 
 
 #### Show
 
-To show a specific product you should go to this link `http://localhost:3000/product/show/:id` with `GET` method and you need to add the product id in the body of request like that
+To show a specific product you should go to this link `http://localhost:3000/product/show/:id` with `GET` method and you need to add the product id in the path variable of request like that
 {
 "id":1
 }
@@ -123,10 +123,8 @@ and this will return the created product like that
 
 #### Get by Category
 
-To get product by category you should go to this link `http://localhost:3000/product/index/category` with `GET` method and add the category in the request body like that
-{
-"category": "My Category"
-}
+To get product by category you should go to this link `http://localhost:3000/product/index/category/?category=test` with `GET` method and change test with the category name
+
 and this will return the products in this category like that
 [
 {
@@ -177,7 +175,7 @@ and this will return a json consists of `user` key which is for the user details
 
 #### Show
 
-To show a specific user from the database you should go to this link `http://localhost:3000/user/show/:id` with `GET` method and with the user id in the body of the request like this
+To show a specific user from the database you should go to this link `http://localhost:3000/user/show/:id` with `GET` method and with the user id in the path variable of the request like this
 
 {
 "id":1
@@ -206,10 +204,10 @@ To delete user you should go to this link `http://localhost:3000/user/delete/:id
 
 #### Get orders by user
 
-To get order by user you should go to this link `http://localhost:3000/orders/:id` with `GET` method and you should add the user id in the request body like this
+To get order by user you should go to this link `http://localhost:3000/orders/:id` with `GET` method and you should add the user id in the request params like this
 
 {
-"user_id": 1
+"id": 1
 }
 
 #### Get completed orders
@@ -217,7 +215,7 @@ To get order by user you should go to this link `http://localhost:3000/orders/:i
 To get completed orders by user you should go to this link `http://localhost:3000/orders/:id` with `GET` method and you should add the user id and status in the request body like this
 
 {
-"user_id": 1,
+"id": 1,
 "status":"completed"
 }
 

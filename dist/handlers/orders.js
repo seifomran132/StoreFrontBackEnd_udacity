@@ -10,8 +10,13 @@ const orderModel = new orders_1.OrderModel();
 const ordersRouter = express_1.default.Router();
 // Get Order handler @params (u_id: number, completed: boolean = false)
 const getorders = async (req, res) => {
-    const orders = await orderModel.getorders(req.body.user_id, req.body.status);
-    res.json(orders);
+    try {
+        const orders = await orderModel.getorders(req.params.id, req.query.status);
+        res.json(orders);
+    }
+    catch (err) {
+        res.send(err);
+    }
 };
 const createOrder = async (req, res) => {
     const ourOrder = {
@@ -20,12 +25,22 @@ const createOrder = async (req, res) => {
         quantity: req.body.quantity,
         status: req.body.status,
     };
-    const createdOrder = await orderModel.createOrder(ourOrder);
-    res.json(createdOrder);
+    try {
+        const createdOrder = await orderModel.createOrder(ourOrder);
+        res.json(createdOrder);
+    }
+    catch (err) {
+        res.send(err);
+    }
 };
 const deleteOrder = async (req, res) => {
-    const deletedOrder = await orderModel.delete(req.body.id);
-    res.json({ message: 'order deleted', userDetails: deletedOrder });
+    try {
+        const deletedOrder = await orderModel.delete(req.body.id);
+        res.json({ message: 'order deleted', userDetails: deletedOrder });
+    }
+    catch (err) {
+        res.send(err);
+    }
 };
 // Simple Router
 ordersRouter.get('/:id', auth_1.verifyToken, getorders);

@@ -56,11 +56,10 @@ describe('Test order endpoints', () => {
   });
 
   it('Should test get order fucntion', async () => {
-    const response = await Supertest.get('/orders/:1')
+    const response = await Supertest.get('/orders/' + 1)
       .set('Authorization', 'Bearer ' + token)
-      .send({
-        user_id: 1,
-      });
+      
+
 
     expect(response.status).toEqual(200);
     expect(response.body.length).toEqual(1);

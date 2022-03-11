@@ -30,7 +30,7 @@ describe('Test product model functionality', () => {
         expect(Object(prod)['category']).toBeTruthy();
     });
     it('Should get the right product using show function', async () => {
-        const prod = await productModel.show(1);
+        const prod = await productModel.show("1");
         expect(Object(prod)['name']).toEqual('Test Product');
         expect(Object(prod)['price']).toEqual(100);
         expect(Object(prod)['category']).toEqual('Test Category');

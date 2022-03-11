@@ -10,8 +10,13 @@ const userModel = new user_1.UsersModel();
 const UserRouter = express_1.default.Router();
 // Handler for the index function in UserModel
 const index = async (req, res) => {
-    const users = await userModel.index();
-    res.json(users);
+    try {
+        const users = await userModel.index();
+        res.json(users);
+    }
+    catch (err) {
+        res.send(err);
+    }
 };
 // Handler for create user function @params (u: user)
 const create = async (req, res) => {
@@ -20,17 +25,32 @@ const create = async (req, res) => {
         lastname: req.body.lastname,
         password: req.body.password,
     };
-    const createdUser = await userModel.create(ourUser);
-    res.json(createdUser);
+    try {
+        const createdUser = await userModel.create(ourUser);
+        res.json(createdUser);
+    }
+    catch (err) {
+        res.send(err);
+    }
 };
 // Handler for create user function @params (id: number)
 const show = async (req, res) => {
-    const showedUser = await userModel.show(req.body.id);
-    res.json(showedUser);
+    try {
+        const showedUser = await userModel.show(req.params.id);
+        res.json(showedUser);
+    }
+    catch (err) {
+        res.send(err);
+    }
 };
 const deleteUser = async (req, res) => {
-    const deletedUser = await userModel.delete(req.body.id);
-    res.json({ message: 'user deleted', userDetails: deletedUser });
+    try {
+        const deletedUser = await userModel.delete(req.body.id);
+        res.json({ message: 'user deleted', userDetails: deletedUser });
+    }
+    catch (err) {
+        res.send(err);
+    }
 };
 // Simple router
 UserRouter.get('/index', auth_1.verifyToken, index);

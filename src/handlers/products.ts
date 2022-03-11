@@ -12,8 +12,12 @@ const index = async (
   req: express.Request,
   res: express.Response
 ): Promise<void> => {
-  const products: product[] | string = await productModel.index();
-  res.json(products);
+  try {
+    const products: product[] | string = await productModel.index();
+    res.json(products);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 // create new product handler @params (p: prouduct)
@@ -27,10 +31,14 @@ const create = async (
     price: parseInt(req.body.price),
     category: req.body.category,
   };
-  const createdProduct: product | string = await productModel.create(
-    ourProduct
-  );
-  res.json(createdProduct);
+  try {
+    const createdProduct: product | string = await productModel.create(
+      ourProduct
+    );
+    res.json(createdProduct);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 // show function handler params (id: number)
@@ -39,26 +47,42 @@ const show = async (
   req: express.Request,
   res: express.Response
 ): Promise<void> => {
-  const showedProduct: product | string = await productModel.show(req.body.id);
-  res.json(showedProduct);
+  try {
+    const showedProduct: product | string = await productModel.show(
+      req.params.id
+    );
+    res.json(showedProduct);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 const getByCategory = async (
   req: express.Request,
   res: express.Response
 ): Promise<void> => {
-  const allInCat: product[] | string = await productModel.showByCategory(
-    req.body.category
-  );
-  res.json(allInCat);
+  try {
+    const allInCat: product[] | string = await productModel.showByCategory(
+      req.query.category
+    );
+    res.json(allInCat);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 const deleteProduct = async (
   req: express.Request,
   res: express.Response
 ): Promise<void> => {
-  const deletedUser = await productModel.delete(req.body.id);
-  res.json({ message: 'product deleted', userDetails: deletedUser });
+  try {
+    const deletedUser = await productModel.delete(req.body.id);
+    res.json({ message: 'product deleted', userDetails: deletedUser });
+  }
+  catch (err) {
+    res.send(err)
+  }
+  
 };
 
 // Simple router

@@ -11,8 +11,12 @@ const index = async (
   req: express.Request,
   res: express.Response
 ): Promise<void> => {
-  const users: user[] = await userModel.index();
-  res.json(users);
+  try {
+    const users: user[] = await userModel.index();
+    res.json(users);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 // Handler for create user function @params (u: user)
@@ -26,8 +30,12 @@ const create = async (
     lastname: req.body.lastname,
     password: req.body.password,
   };
-  const createdUser: createdUser | string = await userModel.create(ourUser);
-  res.json(createdUser);
+  try {
+    const createdUser: createdUser | string = await userModel.create(ourUser);
+    res.json(createdUser);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 // Handler for create user function @params (id: number)
@@ -36,16 +44,24 @@ const show = async (
   req: express.Request,
   res: express.Response
 ): Promise<void> => {
-  const showedUser: user | string = await userModel.show(req.body.id);
-  res.json(showedUser);
+  try {
+    const showedUser: user | string = await userModel.show(req.params.id);
+    res.json(showedUser);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 const deleteUser = async (
   req: express.Request,
   res: express.Response
 ): Promise<void> => {
-  const deletedUser = await userModel.delete(req.body.id);
-  res.json({ message: 'user deleted', userDetails: deletedUser });
+  try {
+    const deletedUser = await userModel.delete(req.body.id);
+    res.json({ message: 'user deleted', userDetails: deletedUser });
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 // Simple router

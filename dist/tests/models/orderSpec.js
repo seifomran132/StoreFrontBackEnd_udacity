@@ -54,7 +54,7 @@ describe('Test Order Model Functionality', () => {
         expect(Object(createdOrder)['status']).toBeTruthy();
     });
     it('Should get order', async () => {
-        const ourOrder = await orderModel.getorders(1);
+        const ourOrder = await orderModel.getorders("1");
         expect(Object(ourOrder[0])['user_id']).toEqual(1);
         expect(Object(ourOrder[0])['product_id']).toEqual(1);
         expect(Object(ourOrder[0])['quantity']).toEqual(1);

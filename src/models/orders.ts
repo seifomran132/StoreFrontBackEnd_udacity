@@ -3,17 +3,17 @@ import client from '../database';
 import order from '../types/order.type';
 
 export class OrderModel {
-  async getorders(u_id: number, completed = false): Promise<order[] | string> {
+  async getorders(u_id: string, completed: unknown = ''): Promise<order[] | string> {
     try {
       const conn: PoolClient = await client.connect(); // Start DB Connection
       if (completed) {
-        const sql = `select * from orders JOIN order_product ON orders.id = order_product.order_id where orders.user_id = $1; and orders.status = 'completed'`;
-        const result: QueryResult = await conn.query(sql, [u_id]);
+        const sql = `select * from orders JOIN order_product ON orders.id = order_product.order_id where orders.user_id = $1 and orders.status = 'completed'`;
+        const result: QueryResult = await conn.query(sql, [parseInt(u_id)]);
         conn.release(); // Release DB Connection
         return result.rows;
       }
       const sql = `select * from orders JOIN order_product ON orders.id = order_product.order_id where orders.user_id = $1;`;
-      const result: QueryResult = await conn.query(sql, [u_id]);
+      const result: QueryResult = await conn.query(sql, [parseInt(u_id)]);
       conn.release(); // Release DB Connection
 
       return result.rows;

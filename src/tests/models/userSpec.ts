@@ -33,7 +33,7 @@ describe('User Model Test', () => {
     expect(Object(ourUser[0])['password']).not.toEqual('test123');
   });
   it('Should test show function', async () => {
-    const ourUser: user | string = await userModel.show(1);
+    const ourUser: user | string = await userModel.show("1");
     expect(Object(ourUser)['firstname']).toEqual('seif');
     expect(Object(ourUser)['lastname']).toEqual('omran');
     expect(Object(ourUser)['password']).not.toEqual('test123');

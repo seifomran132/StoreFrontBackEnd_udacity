@@ -45,9 +45,7 @@ describe('Test product endpoints', () => {
   });
 
   it('Should test show product endpoint', async () => {
-    const response = await Supertest.get('/product/show/:1').send({
-      id: 1,
-    });
+    const response = await Supertest.get('/product/show/1');
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(1);
     expect(response.body.name).toEqual('Test Product');
@@ -60,17 +58,13 @@ describe('Test product endpoints', () => {
     expect(response.body.length).toEqual(1);
   });
   it('Should test get product by category endpoint', async () => {
-    const response = await Supertest.get('/product/index/category').send({
-      category: 'Test Category',
-    });
+    const response = await Supertest.get('/product/index/category/?category=Test Category');
     expect(response.status).toEqual(200);
     expect(response.body.length).toEqual(1);
     expect(response.body[0].category).toEqual('Test Category');
   });
   it('Should test get product by category endpoint', async () => {
-    const response = await Supertest.get('/product/index/category').send({
-      category: 'Test Category',
-    });
+    const response = await Supertest.get('/product/index/category/?category=Test Category')
     expect(response.status).toEqual(200);
     expect(response.body.length).toEqual(1);
     expect(response.body[0].category).toEqual('Test Category');
