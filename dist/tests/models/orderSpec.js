@@ -7,23 +7,23 @@ const database_1 = __importDefault(require("../../database"));
 const orders_1 = require("../../models/orders");
 const products_1 = require("../../models/products");
 const user_1 = require("../../models/user");
-const orderModel = new orders_1.OrderModel;
-const productModel = new products_1.ProductModel;
-const userModel = new user_1.UsersModel;
-describe("Test Order Model Functionality", () => {
+const orderModel = new orders_1.OrderModel();
+const productModel = new products_1.ProductModel();
+const userModel = new user_1.UsersModel();
+describe('Test Order Model Functionality', () => {
     beforeAll(async () => {
         const ourUser = {
-            firstname: "Seif",
-            lastname: "Omran",
-            password: "s123"
+            firstname: 'Seif',
+            lastname: 'Omran',
+            password: 's123',
         };
         const ourProduct = {
-            name: "Prod 1",
+            name: 'Prod 1',
             price: 100,
-            category: "Cat 1"
+            category: 'Cat 1',
         };
-        const createdUser = await userModel.create(ourUser);
-        const createdProduct = await productModel.create(ourProduct);
+        await userModel.create(ourUser);
+        await productModel.create(ourProduct);
     });
     afterAll(async () => {
         await orderModel.delete(1);
@@ -34,37 +34,37 @@ describe("Test Order Model Functionality", () => {
         await conn.query(sql);
         conn.release();
     });
-    it("Should contain get order function", () => {
+    it('Should contain get order function', () => {
         expect(orderModel.getorders).toBeDefined();
     });
-    it("Should contain create order function", () => {
+    it('Should contain create order function', () => {
         expect(orderModel.createOrder).toBeDefined();
     });
-    it("Should create a new order", async () => {
+    it('Should create a new order', async () => {
         const ourOrder = {
             user_id: 1,
             product_id: 1,
             quantity: 1,
-            status: "completed"
+            status: 'completed',
         };
         const createdOrder = await orderModel.createOrder(ourOrder);
-        expect(Object(createdOrder)["user_id"]).toBeTruthy();
-        expect(Object(createdOrder)["product_id"]).toBeTruthy();
-        expect(Object(createdOrder)["quantity"]).toBeTruthy();
-        expect(Object(createdOrder)["status"]).toBeTruthy();
+        expect(Object(createdOrder)['user_id']).toBeTruthy();
+        expect(Object(createdOrder)['product_id']).toBeTruthy();
+        expect(Object(createdOrder)['quantity']).toBeTruthy();
+        expect(Object(createdOrder)['status']).toBeTruthy();
     });
-    it("Should get order", async () => {
+    it('Should get order', async () => {
         const ourOrder = await orderModel.getorders(1);
-        expect(Object(ourOrder[0])["user_id"]).toEqual(1);
-        expect(Object(ourOrder[0])["product_id"]).toEqual(1);
-        expect(Object(ourOrder[0])["quantity"]).toEqual(1);
-        expect(Object(ourOrder[0])["status"]).toEqual("completed");
+        expect(Object(ourOrder[0])['user_id']).toEqual(1);
+        expect(Object(ourOrder[0])['product_id']).toEqual(1);
+        expect(Object(ourOrder[0])['quantity']).toEqual(1);
+        expect(Object(ourOrder[0])['status']).toEqual('completed');
     });
-    it("Should delete order", async () => {
+    it('Should delete order', async () => {
         const deletedOrder = await orderModel.delete(1);
-        expect(Object(deletedOrder)["user_id"]).toEqual(1);
-        expect(Object(deletedOrder)["product_id"]).toEqual(1);
-        expect(Object(deletedOrder)["quantity"]).toEqual(1);
-        expect(Object(deletedOrder)["status"]).toEqual("completed");
+        expect(Object(deletedOrder)['user_id']).toEqual(1);
+        expect(Object(deletedOrder)['product_id']).toEqual(1);
+        expect(Object(deletedOrder)['quantity']).toEqual(1);
+        expect(Object(deletedOrder)['status']).toEqual('completed');
     });
 });

@@ -55,6 +55,26 @@ to run eslint use `npm run lint` or `yarn lint`
 
 All migerations up and down files are in migeration folder
 
+
+## Enviroment Variables
+
+
+POSTGRES_HOST=127.0.0.1
+POSTGRES_PORT=5432
+POSTGRES_DB=store_dev
+POSTGRES_DB_TEST=store_test
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=s132
+
+BCRYPT_PASSWORD = our-store-is-protected
+SALT_ROUNDS = 10
+
+TOKEN = your-json-secret
+
+NODE_ENV = dev
+
+
+
 ### migerations for:-
 
 - users table

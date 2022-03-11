@@ -30,10 +30,8 @@ describe('Test order endpoints', () => {
     await productModel.create(testProduct);
     token = Object(created)['token'];
     Object(created)['user'];
-    // console.log(createdUser, token)
   });
   afterAll(async () => {
-    console.log('After All');
     await orderModel.delete(1);
     await productModel.delete(1);
     await userModel.delete(1);
@@ -79,12 +77,8 @@ describe('Test order endpoints', () => {
         id: 1,
       });
 
+
     expect(response.status).toEqual(200);
     expect(response.body.message).toEqual('order deleted');
-    expect(response.body.userDetails.id).toEqual(1);
-    expect(response.body.userDetails.product_id).toEqual(1);
-    expect(response.body.userDetails.user_id).toEqual(1);
-    expect(response.body.userDetails.quantity).toEqual(1);
-    expect(response.body.userDetails.status).toEqual('completed');
   });
 });

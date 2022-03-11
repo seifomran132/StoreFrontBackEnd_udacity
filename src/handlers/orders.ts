@@ -21,7 +21,7 @@ const getorders = async (
 const createOrder = async (req: express.Request, res: express.Response) => {
   const ourOrder: order = {
     product_id: req.body.product_id,
-    user_id: req.body.product_id,
+    user_id: req.body.user_id,
     quantity: req.body.quantity,
     status: req.body.status,
   };
